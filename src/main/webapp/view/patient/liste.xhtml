@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      >
+	<h:head>
+		<title>Patient</title>
+		<link rel="stylesheet" href="../../public/css/bootstrap.min.css" />  
+	</h:head>
+	<body>
+		<div class="navbar navbar-primary">
+			<ul class="nav navbar-nav">
+				<li><a href="../../accueil.jsf">Accueil</a></li>
+				<li><a href="liste.jsf">Gestion des patients</a></li>
+				<li><a href="../liste.jsf">Gestion des rendez-vous</a></li>
+			</ul>
+		</div>
+		<h:form id="form1">
+            <p:panel id="panel" header="Gestion des patients">
+                <p:commandButton value="Ajouter" onclick="addDialog.show()" action="#{patientbean.initPatient()}"/>
+             	<p:dialog widgetVar="addDialog" id="addDialog" header="Ajout">
+                    <h:form>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom du patient" />
+                            <p:inputText id="nom" value="#{patientbean.patient.nom}" style="width: 250px;"/>
+                            
+                            <p:outputLabel value="Prenom du patient" />
+                            <p:inputText id="prenom" value="#{patientbean.patient.prenom}" style="width: 250px;"/>
+                            
+                            <p:outputLabel value="Adresse du patient" />
+                            <p:inputText id="adresse" value="#{patientbean.patient.adresse}" style="width: 250px;"/>
+                            
+                            <p:commandButton value="Valider" action="#{patientbean.addPatient()}" update=":form1:dataTable" process="@this,nom,prenom,adresse" oncomplete="PF('addDialog').hide();"/>
+                            <p:commandButton value="Annuler" action="#{patientbean.resetPatient()}" oncomplete="PF('addDialog').hide();" />
+                    	</p:panelGrid>
+                    </h:form>  
+                </p:dialog> 
+                
+                <p:dialog widgetVar="editDialog" header="Modification">
+                    <h:form id="fedit">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Id du patient" />
+                            <p:inputText id="id" value="#{patientbean.patient.id}" style="width: 250px;"/>
+                            
+                            <p:outputLabel value="Nom du patient" />
+                            <p:inputText id="nom" value="#{patientbean.patient.nom}" style="width: 250px;"/>
+                            
+                            <p:outputLabel value="Prenom du patient" />
+                            <p:inputText id="prenom" value="#{patientbean.patient.prenom}" style="width: 250px;"/>
+                            
+                            <p:outputLabel value="Adresse du patient" />
+                            <p:inputText id="adresse" value="#{patientbean.patient.adresse}" style="width: 250px;"/>
+                            
+                            <p:commandButton value="Valider" action="#{patientbean.updatePatient()}" update=":form1:dataTable" process="@this,id,nom,prenom,adresse" oncomplete="PF('editDialog').hide();"/>
+                            <p:commandButton value="Annuler" action="#{patientbean.resetPatient()}" oncomplete="PF('editDialog').hide();"/>
+                    	</p:panelGrid>
+                    </h:form>  
+                </p:dialog>
+                
+                <p:dataTable editable="true" id="dataTable" var="patient" value="#{patientbean.getAll()}" paginator="true" rows="10"  
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10"   rowKey="#{patient.id}" selectionMode="single"  selection="#{patientbean.patient}" >
+                   <p:ajax event="rowSelect" listener="#{patientbean.getById}" oncomplete="editDialog.show()"  process="@this" update=":form1:fedit"/>
+                        
+                        <p:column id="id"   headerText="Id">
+                            <h:outputText value="#{patient.id}" />
+                        </p:column>
+                        
+                        <p:column id="nom"   headerText="Nom">
+                            <h:outputText value="#{patient.nom}" />
+                        </p:column>
+                        
+                        <p:column id="prenom"   headerText="Prenom">
+                            <h:outputText value="#{patient.prenom}" />
+                        </p:column>
+                        
+                        <p:column id="adresse"   headerText="Adresse">
+                            <h:outputText value="#{patient.adresse}" />
+                        </p:column>
+                       <p:column  headerText="Action">
+                           <p:commandLink  value="Supprimer" action="#{patientbean.delete(patient)}" 
+                                           update=":form1:dataTable,id,nom,prenom,adresse" process="@this,id,nom,prenom,adresse" onclick="if(!confirm('Voulez-vous Supprimer')) return false;"/>
+                       </p:column>  
+                </p:dataTable>     
+            </p:panel>
+      	</h:form>    
+	</body>
+</html>

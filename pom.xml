@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.samanecorporation</groupId>
+  <artifactId>jsf3</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>jsf3 Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <!-- Facelets -->
+	<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+	<dependency>
+	    <groupId>org.primefaces</groupId>
+	    <artifactId>primefaces</artifactId>
+	    <version>4.0</version>
+	</dependency>
+
+	<!-- https://mvnrepository.com/artifact/org.glassfish/javax.faces -->
+	<dependency>
+	    <groupId>org.glassfish</groupId>
+	    <artifactId>javax.faces</artifactId>
+	    <version>2.1.14</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>4.0.0</version>
+	    <scope>provided</scope>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>jstl</artifactId>
+	    <version>1.2</version>
+	</dependency>
+
+  </dependencies>
+  <build>
+    <finalName>jsf3</finalName>
+  </build>
+</project>
